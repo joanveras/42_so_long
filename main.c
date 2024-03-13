@@ -10,7 +10,7 @@ int	main(int argc, char **argv)
 		return (1);
 	validate_map(argv[1]);
 	map = open_map(argv[1]);
-	win = initialize_X11_connection(map);
+	initialize_X11_connection(&win, map);
 	player = find_obj(map, (t_point){1, 1}, PLAYER);
 	win.player.position_x = player.x;
 	win.player.position_y = player.y;

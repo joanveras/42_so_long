@@ -1,32 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   validate_map.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jveras <verasjoan587@gmail.com>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/03/09 09:29:53 by jveras            #+#    #+#             */
+/*   Updated: 2024/03/13 09:01:20 by jveras           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/so_long.h"
-
-static void	map_is_not_closed_err(void)
-{
-	write(1, "error: MAP IS NOT SORROUNDED BY WALLS\n", 39);
-	exit(EXIT_FAILURE);
-}
-
-static void	has_double_E_or_P_err(void)
-{
-	write(1, "error: MAP HAS DUPLICATE >> (Exit) or (Player)\n", 48);
-	exit(EXIT_FAILURE);
-}
-
-static void	could_not_find_obj_err(void)
-{
-	write(1,
-		"error: MAP HAS NOT OBJ >> (Exit), (Player) or (Collectible)\n",
-		61);
-	exit(EXIT_FAILURE);
-}
-
-static void	exit_or_collectibles_not_reachable_err(void)
-{
-	write(1,
-		"error: IT'S NOT POSSIBLE TO REACH >> (Exit) or (Collectible(s))\n",
-		65);
-	exit(EXIT_FAILURE);
-}
 
 t_bool	validate_map(char *path)
 {
@@ -37,22 +21,25 @@ t_bool	validate_map(char *path)
 	char	**map;
 
 	map = open_map(path);
+	is_map_irregular(map);
+	check_map_characters(map);
 	if (!is_map_closed(map))
-		map_is_not_closed_err();
+		map_is_not_closed_err(map);
 	P = find_obj(map, (t_point){1, 1}, PLAYER);
 	E = find_obj(map, (t_point){1, 1}, EXIT);
 	C = find_obj(map, (t_point){1, 1}, COLLECTIBLE);
 	if ((!P.y && !P.x) || (!E.y && !E.x) || (!C.y && !C.x))
-		could_not_find_obj_err();
+		could_not_find_obj_err(map);
 	else if (has_duplicate(map, EXIT) || has_duplicate(map, PLAYER))
-		has_double_E_or_P_err();
+		has_double_E_or_P_err(map);
 	reach_exit = FALSE;
 	flood_fill(map, P, TRUE, &reach_exit);
+	free_map(map);
 	map = open_map(path);
 	flood_fill(map, P, FALSE, (t_bool *)0);
 	C = find_obj(map, (t_point){1, 1}, COLLECTIBLE);
-	free(map);
 	if (!reach_exit || (C.x || C.y))
-		exit_or_collectibles_not_reachable_err();
+		exit_or_collectibles_not_reachable_err(map);
+	free_map(map);
 	return (FALSE);
 }

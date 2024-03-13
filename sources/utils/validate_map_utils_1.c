@@ -1,6 +1,16 @@
-#include "../../includes/so_long.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   validate_map_utils_1.c                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jveras <verasjoan587@gmail.com>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/03/09 09:28:07 by jveras            #+#    #+#             */
+/*   Updated: 2024/03/13 10:44:19 by jveras           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-#define MAX_SIZE 1000
+#include "../../includes/so_long.h"
 
 char	**open_map(char *path)
 {
@@ -9,23 +19,25 @@ char	**open_map(char *path)
 	char	*line;
 	char	**map;
 
-	fd = open(path, O_RDONLY);
-	if (fd < 0)
+	map = malloc((count_lines(path) + 1) * sizeof(char *));
+	if (!map)
 	{
-		write(1, "error: COULD NOT OPEN FILE\n", 27);
+		write(2, "Memory allocation failure:: allocating (char **map)", 52);
 		exit(EXIT_FAILURE);
 	}
-	map = malloc(MAX_SIZE * sizeof(char *));
-	if (!map)
-		exit(EXIT_FAILURE);
+	fd = open(path, O_RDONLY);
 	line = get_next_line(fd);
 	i = 0;
 	while (line)
 	{
-		map[i] = line;
+		map[i] = ft_strdup(line);
+		if (ft_strchr(map[i], '\n'))
+			map[i][ft_strlen(map[i]) - 1] = '\0';
+		free(line);
 		line = get_next_line(fd);
 		i++;
 	}
+	map[i] = NULL;
 	close(fd);
 	return (map);
 }
@@ -106,10 +118,9 @@ t_bool	is_map_closed(char **map)
 		x = 0;
 		while (map[y][x])
 		{
-			if ((y == 0 || !map[y + 1])
-				&& (map[y][x] != '\n' && map[y][x] != WALL))
+			if ((y == 0 || !map[y + 1]) && map[y][x] != WALL)
 					return (FALSE);
-			if ((x == 0 || map[y][x + 1] == '\n') && map[y][x] != WALL)
+			if ((x == 0 || !map[y][x + 1]) && map[y][x] != WALL)
 				return (FALSE);
 			x++;
 		}

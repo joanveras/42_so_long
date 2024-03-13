@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   game_utils.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jveras <verasjoan587@gmail.com>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/03/09 09:27:12 by jveras            #+#    #+#             */
+/*   Updated: 2024/03/13 10:32:28 by jveras           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/so_long.h"
 
 t_window_dimensions	window_dimensions(char **map)
@@ -17,7 +29,7 @@ t_window_dimensions	window_dimensions(char **map)
 	width = 0;
 	y = 0;
 	x = 0;
-	while (map[y][x] != '\n')
+	while (map[y][x])
 	{
 		width++;
 		x++;
@@ -26,43 +38,47 @@ t_window_dimensions	window_dimensions(char **map)
 		{width * SPRITE_SIZE, height * SPRITE_SIZE});
 }
 
-t_win	initialize_X11_connection(char **map)
+void	initialize_X11_connection(t_win *win, char **map)
 {
-	t_win				win;
-
-	win.mlx_ptr = mlx_init();
-	if (!win.mlx_ptr)
+	win->mlx_ptr = mlx_init();
+	if (!win->mlx_ptr)
 	{
 		write(1, "NO CONNECTION WITH X11!", 24);
 		exit(EXIT_FAILURE);
 	}
-	win.dimensions = window_dimensions(map);
-	win.win_ptr = mlx_new_window(win.mlx_ptr,
-		win.dimensions.width, win.dimensions.height, "so_long");
-	if (!win.win_ptr)
+	win->dimensions = window_dimensions(map);
+	win->win_ptr = mlx_new_window(win->mlx_ptr,
+		win->dimensions.width, win->dimensions.height, "so_long");
+	if (!win->win_ptr)
 	{
 		write(1, "NO WINDOW!", 10);
 		exit(EXIT_FAILURE);
 	}
-	if (win.dimensions.width == win.dimensions.height)
+	if (win->dimensions.width == win->dimensions.height)
 	{
 		write(1, "error: The map must not be a SQUARE", 36);
 		exit(EXIT_FAILURE);
 	}
-	return (win);
 }
 
-void	load_tiles(t_win *win)
+int	count_collectibles(char **map)
 {
-	load_idle(win);
-	load_side_walks_1(win);
-	load_side_walks_2(win);
-	load_static_sprites(win);
-}
+	int	i;
+	int	j;
+	int	counter;
 
-int	player_idle(int key, t_win *win)
-{
-	if (key)
-		mlx_loop_hook(win->mlx_ptr, idle_animation, win);
-	return (0);
+	counter = 0;
+	i = 0;
+	while (map[i])
+	{
+		j = 0;
+		while (map[i][j])
+		{
+			if (map[i][j] == COLLECTIBLE)
+				counter++;
+			j++;
+		}
+		i++;
+	}
+	return (counter);
 }
