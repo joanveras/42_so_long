@@ -6,7 +6,7 @@
 /*   By: jveras <verasjoan587@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 09:27:19 by jveras            #+#    #+#             */
-/*   Updated: 2024/03/12 08:47:48 by jveras           ###   ########.fr       */
+/*   Updated: 2024/03/18 09:53:23 by jveras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,11 @@ static void	*load_sprite(t_win *win, char *path)
 	void	*sprite;
 
 	sprite = mlx_xpm_file_to_image(
-		win->mlx_ptr,
-		path,
-		&(win->w),
-		&(win->h)
-	);
+			win->mlx_ptr,
+			path,
+			&(win->w),
+			&(win->h)
+			);
 	return (sprite);
 }
 
@@ -82,15 +82,19 @@ void	load_side_walks_2(t_win	*win)
 	left_walk.frame_delay = 4200;
 	left_walk.num_sprites = 2;
 	left_walk.list = malloc(sizeof(void *) * left_walk.num_sprites);
-	left_walk.list[0] = load_sprite(win, "textures/side_walks/left_side_walk_1.xpm");
-	left_walk.list[1] = load_sprite(win, "textures/side_walks/left_side_walk_2.xpm");
+	left_walk.list[0]
+		= load_sprite(win, "textures/side_walks/left_side_walk_1.xpm");
+	left_walk.list[1]
+		= load_sprite(win, "textures/side_walks/left_side_walk_2.xpm");
 	right_walk.current_sprite_index = 0;
 	right_walk.frame_count = 0;
 	right_walk.frame_delay = 4200;
 	right_walk.num_sprites = 2;
 	right_walk.list = malloc(sizeof(void *) * right_walk.num_sprites);
-	right_walk.list[0] = load_sprite(win, "textures/side_walks/right_side_walk_1.xpm");
-	right_walk.list[1] = load_sprite(win, "textures/side_walks/right_side_walk_2.xpm");
+	right_walk.list[0]
+		= load_sprite(win, "textures/side_walks/right_side_walk_1.xpm");
+	right_walk.list[1]
+		= load_sprite(win, "textures/side_walks/right_side_walk_2.xpm");
 	{
 		win->tiles.left_walk = left_walk;
 		win->tiles.right_walk = right_walk;

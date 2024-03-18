@@ -6,7 +6,7 @@
 /*   By: jveras <verasjoan587@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 09:27:04 by jveras            #+#    #+#             */
-/*   Updated: 2024/03/09 09:27:04 by jveras           ###   ########.fr       */
+/*   Updated: 2024/03/18 09:48:51 by jveras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	idle_animation(t_win *win)
 		win->tiles.idle.list[win->tiles.idle.current_sprite_index],
 		player.position_x * SPRITE_SIZE,
 		player.position_y * SPRITE_SIZE
-	);
+		);
 	if ((win->tiles.idle.frame_count % win->tiles.idle.frame_delay) == 0)
 	{
 		win->tiles.idle.current_sprite_index = \
@@ -46,8 +46,9 @@ int	down_walk_animation(t_win *win)
 		win->tiles.down_walk.list[win->tiles.down_walk.current_sprite_index],
 		player.position_x * SPRITE_SIZE,
 		player.position_y * SPRITE_SIZE
-	);
-	if ((win->tiles.down_walk.frame_count % win->tiles.down_walk.frame_delay) == 0)
+		);
+	if ((win->tiles.down_walk.frame_count
+			% win->tiles.down_walk.frame_delay) == 0)
 	{
 		win->tiles.down_walk.current_sprite_index = \
 		(win->tiles.down_walk.current_sprite_index + 1) \
@@ -69,8 +70,9 @@ int	up_walk_animation(t_win *win)
 		win->tiles.up_walk.list[win->tiles.up_walk.current_sprite_index],
 		player.position_x * SPRITE_SIZE,
 		player.position_y * SPRITE_SIZE
-	);
-	if ((win->tiles.up_walk.frame_count % win->tiles.up_walk.frame_delay) == 0)
+		);
+	if ((win->tiles.up_walk.frame_count
+			% win->tiles.up_walk.frame_delay) == 0)
 	{
 		win->tiles.up_walk.current_sprite_index = \
 		(win->tiles.up_walk.current_sprite_index + 1) \
@@ -92,8 +94,9 @@ int	left_walk_animation(t_win *win)
 		win->tiles.left_walk.list[win->tiles.left_walk.current_sprite_index],
 		player.position_x * SPRITE_SIZE,
 		player.position_y * SPRITE_SIZE
-	);
-	if ((win->tiles.left_walk.frame_count % win->tiles.left_walk.frame_delay) == 0)
+		);
+	if ((win->tiles.left_walk.frame_count
+			% win->tiles.left_walk.frame_delay) == 0)
 	{
 		win->tiles.left_walk.current_sprite_index = \
 		(win->tiles.left_walk.current_sprite_index + 1) \
@@ -115,8 +118,9 @@ int	right_walk_animation(t_win *win)
 		win->tiles.right_walk.list[win->tiles.right_walk.current_sprite_index],
 		player.position_x * SPRITE_SIZE,
 		player.position_y * SPRITE_SIZE
-	);
-	if ((win->tiles.right_walk.frame_count % win->tiles.right_walk.frame_delay) == 0)
+		);
+	if ((win->tiles.right_walk.frame_count
+			% win->tiles.right_walk.frame_delay) == 0)
 	{
 		win->tiles.right_walk.current_sprite_index = \
 		(win->tiles.right_walk.current_sprite_index + 1) \

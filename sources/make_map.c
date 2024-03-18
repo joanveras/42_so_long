@@ -6,13 +6,13 @@
 /*   By: jveras <verasjoan587@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 09:29:08 by jveras            #+#    #+#             */
-/*   Updated: 2024/03/13 10:32:08 by jveras           ###   ########.fr       */
+/*   Updated: 2024/03/18 09:39:46 by jveras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/so_long.h"
 
-static void	conditions(char	c, t_win *win, int x, int y)
+static void	conditions(char c, t_win *win, int x, int y)
 {
 	if (c == WALL)
 		mlx_put_image_to_window(win->mlx_ptr, win->win_ptr,

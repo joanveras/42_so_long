@@ -6,25 +6,18 @@
 /*   By: jveras <verasjoan587@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 09:28:07 by jveras            #+#    #+#             */
-/*   Updated: 2024/03/13 10:44:19 by jveras           ###   ########.fr       */
+/*   Updated: 2024/03/18 10:15:52 by jveras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/so_long.h"
 
-char	**open_map(char *path)
+static void	fill_map(char *path, char **map)
 {
 	int		i;
 	int		fd;
 	char	*line;
-	char	**map;
 
-	map = malloc((count_lines(path) + 1) * sizeof(char *));
-	if (!map)
-	{
-		write(2, "Memory allocation failure:: allocating (char **map)", 52);
-		exit(EXIT_FAILURE);
-	}
 	fd = open(path, O_RDONLY);
 	line = get_next_line(fd);
 	i = 0;
@@ -39,26 +32,44 @@ char	**open_map(char *path)
 	}
 	map[i] = NULL;
 	close(fd);
+}
+
+char	**open_map(char *path)
+{
+	char	**map;
+
+	map = malloc((count_lines(path) + 1) * sizeof(char *));
+	if (!map)
+	{
+		write(2, "Memory allocation failure:: allocating (char **map)", 52);
+		exit(EXIT_FAILURE);
+	}
+	fill_map(path, map);
 	return (map);
 }
 
-void flood_fill(char **map, t_point player, t_bool search_for_exit, t_bool *is_valid)
+void	flood_fill(char **map, t_point player,
+		t_bool search_for_exit, t_bool *is_valid)
 {
 	if ((player.y < 0 || !map[player.y])
 		|| (player.x < 0 || !map[player.y][player.x]))
 		return ;
-    if (map[player.y][player.x] == WALL || map[player.y][player.x] == 'X')
-        return ;
-    if (search_for_exit && map[player.y][player.x] == EXIT)
-    {
+	if (map[player.y][player.x] == WALL || map[player.y][player.x] == 'X')
+		return ;
+	if (search_for_exit && map[player.y][player.x] == EXIT)
+	{
 		*is_valid = TRUE;
 		return ;
 	}
-    map[player.y][player.x] = 'X';
-    flood_fill(map, (t_point){player.x + 1, player.y}, search_for_exit, is_valid);
-    flood_fill(map, (t_point){player.x - 1, player.y}, search_for_exit, is_valid);
-    flood_fill(map, (t_point){player.x, player.y + 1}, search_for_exit, is_valid);
-    flood_fill(map, (t_point){player.x, player.y - 1}, search_for_exit, is_valid);
+	map[player.y][player.x] = 'X';
+	flood_fill(map, (t_point){player.x + 1, player.y},
+		search_for_exit, is_valid);
+	flood_fill(map, (t_point){player.x - 1, player.y},
+		search_for_exit, is_valid);
+	flood_fill(map, (t_point){player.x, player.y + 1},
+		search_for_exit, is_valid);
+	flood_fill(map, (t_point){player.x, player.y - 1},
+		search_for_exit, is_valid);
 }
 
 t_bool	has_duplicate(char **map, int obj)
@@ -105,26 +116,4 @@ t_point	find_obj(char **map, t_point start, int obj)
 		y++;
 	}
 	return ((t_point){FALSE, FALSE});
-}
-
-t_bool	is_map_closed(char **map)
-{
-	int	x;
-	int	y;
-
-	y = 0;
-	while (map[y])
-	{
-		x = 0;
-		while (map[y][x])
-		{
-			if ((y == 0 || !map[y + 1]) && map[y][x] != WALL)
-					return (FALSE);
-			if ((x == 0 || !map[y][x + 1]) && map[y][x] != WALL)
-				return (FALSE);
-			x++;
-		}
-		y++;
-	}
-	return (TRUE);
 }

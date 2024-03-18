@@ -6,7 +6,7 @@
 /*   By: jveras <verasjoan587@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 09:27:12 by jveras            #+#    #+#             */
-/*   Updated: 2024/03/13 10:32:28 by jveras           ###   ########.fr       */
+/*   Updated: 2024/03/18 09:50:46 by jveras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ t_window_dimensions	window_dimensions(char **map)
 		{width * SPRITE_SIZE, height * SPRITE_SIZE});
 }
 
-void	initialize_X11_connection(t_win *win, char **map)
+void	initialize_x11_connection(t_win *win, char **map)
 {
 	win->mlx_ptr = mlx_init();
 	if (!win->mlx_ptr)
@@ -47,16 +47,16 @@ void	initialize_X11_connection(t_win *win, char **map)
 		exit(EXIT_FAILURE);
 	}
 	win->dimensions = window_dimensions(map);
-	win->win_ptr = mlx_new_window(win->mlx_ptr,
-		win->dimensions.width, win->dimensions.height, "so_long");
-	if (!win->win_ptr)
-	{
-		write(1, "NO WINDOW!", 10);
-		exit(EXIT_FAILURE);
-	}
 	if (win->dimensions.width == win->dimensions.height)
 	{
 		write(1, "error: The map must not be a SQUARE", 36);
+		exit(EXIT_FAILURE);
+	}
+	win->win_ptr = mlx_new_window(win->mlx_ptr,
+			win->dimensions.width, win->dimensions.height, "so_long");
+	if (!win->win_ptr)
+	{
+		write(1, "NO WINDOW!", 10);
 		exit(EXIT_FAILURE);
 	}
 }

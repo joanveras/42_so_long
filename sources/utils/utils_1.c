@@ -6,7 +6,7 @@
 /*   By: jveras <verasjoan587@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 09:27:46 by jveras            #+#    #+#             */
-/*   Updated: 2024/03/13 13:38:26 by jveras           ###   ########.fr       */
+/*   Updated: 2024/03/18 09:55:40 by jveras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	count_lines(char *path)
 	int		fd;
 	int		counter;
 	char	*line;
-	
+
 	fd = open(path, O_RDONLY);
 	if (fd < 0)
 	{

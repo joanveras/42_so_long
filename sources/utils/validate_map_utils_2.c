@@ -6,11 +6,33 @@
 /*   By: jveras <verasjoan587@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 10:56:44 by jveras            #+#    #+#             */
-/*   Updated: 2024/03/13 13:07:13 by jveras           ###   ########.fr       */
+/*   Updated: 2024/03/18 10:45:51 by jveras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/so_long.h"
+
+t_bool	is_map_closed(char **map)
+{
+	int	x;
+	int	y;
+
+	y = 0;
+	while (map[y])
+	{
+		x = 0;
+		while (map[y][x])
+		{
+			if ((y == 0 || !map[y + 1]) && map[y][x] != WALL)
+				return (FALSE);
+			if ((x == 0 || !map[y][x + 1]) && map[y][x] != WALL)
+				return (FALSE);
+			x++;
+		}
+		y++;
+	}
+	return (TRUE);
+}
 
 void	check_map_characters(char **map)
 {
@@ -38,8 +60,7 @@ void	check_map_characters(char **map)
 
 void	is_map_irregular(char **map)
 {
-	int	x;
-	int	y;
+	int		y;
 	size_t	len;
 
 	y = 0;

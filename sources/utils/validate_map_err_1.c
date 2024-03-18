@@ -6,7 +6,7 @@
 /*   By: jveras <verasjoan587@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 13:58:19 by jveras            #+#    #+#             */
-/*   Updated: 2024/03/13 10:08:08 by jveras           ###   ########.fr       */
+/*   Updated: 2024/03/18 09:56:22 by jveras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	map_is_not_closed_err(char **map)
 	exit(EXIT_FAILURE);
 }
 
-void	has_double_E_or_P_err(char **map)
+void	has_double_e_or_p_err(char **map)
 {
 	free_map(map);
 	write(2, "error: MAP HAS DUPLICATE >> (Exit) or (Player)\n", 48);

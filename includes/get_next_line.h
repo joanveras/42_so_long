@@ -6,7 +6,7 @@
 /*   By: jveras <verasjoan587@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 15:01:53 by jveras            #+#    #+#             */
-/*   Updated: 2024/03/11 10:12:55 by jveras           ###   ########.fr       */
+/*   Updated: 2024/03/15 18:06:23 by jveras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,5 @@ char	*ft_strchr(const char *s, int c);
 
 size_t	ft_strlen(const char *str);
 size_t	ft_strlcpy(char *dest, const char *src, size_t size);
-size_t	ft_strlcat(char *dst, const char *src, size_t dstsize);
 
 #endif
